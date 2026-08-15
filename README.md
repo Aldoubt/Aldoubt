@@ -9,13 +9,15 @@
   <img src="https://img.shields.io/badge/ROS%202-Humble-22314E?style=flat-square&logo=ros&logoColor=white" alt="ROS 2 Humble" />
   <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C++17" />
   <img src="https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <a href="mailto:xuanyang.robotics@gmail.com"><img src="https://img.shields.io/badge/Email-xuanyang.robotics%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>
 </p>
 
 <p align="center">
   <a href="#about--关于我">About / 关于我</a> ·
   <a href="#featured-projects--主要项目">Projects / 项目</a> ·
   <a href="#technical-stack--技术栈">Stack / 技术栈</a> ·
-  <a href="#github-activity">GitHub Stats</a>
+  <a href="#github-activity">GitHub Stats</a> ·
+  <a href="#contact--联系">Contact / 联系</a>
 </p>
 
 ---
@@ -170,6 +172,15 @@ Recording datasets, parameters, software versions, hardware environments and fai
 
 ## Contact / 联系
 
-For technical discussions, collaboration or reproducibility questions, feel free to open an **Issue** or **Discussion** in the corresponding repository.
+<p align="center">
+  <a href="mailto:xuanyang.robotics@gmail.com"><img src="https://img.shields.io/badge/Email-xuanyang.robotics%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email Xuan Yang" /></a>
+  <a href="https://github.com/Aldoubt"><img src="https://img.shields.io/badge/GitHub-%40Aldoubt-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Aldoubt" /></a>
+</p>
 
-如果希望讨论技术问题、项目合作或实验复现，可以直接在对应仓库提交 **Issue** 或参与 **Discussion**。
+For **research collaboration, robotics projects, engineering discussions or professional contact**, email me at **[xuanyang.robotics@gmail.com](mailto:xuanyang.robotics@gmail.com)**.
+
+For questions about a specific repository, please open an **Issue** or **Discussion** in that repository so the context and solution can remain public and reproducible.
+
+如需进行 **科研合作、机器人项目交流、工程技术讨论或职业联系**，可以通过 **[xuanyang.robotics@gmail.com](mailto:xuanyang.robotics@gmail.com)** 联系我。
+
+如果是某个具体仓库的技术问题，建议优先在对应仓库提交 **Issue** 或 **Discussion**，便于保留问题背景、解决过程和可复现记录。
