@@ -70,8 +70,6 @@ My current engineering focus is the complete chain from **state estimation and m
 - Current extracted ROS 2 Humble workspace has completed an **independent 23-package build**.
 - Architecture target: `Site Package + Vehicle Profile + Task -> Localization -> Perception -> Planner/Controller -> Mission -> Safety -> Chassis`.
 
-**Evidence to add next:** real-robot navigation GIF, RViz runtime screenshot, failure-recovery demo.
-
 ---
 
 ### 2. [AGT Map Reconstruction](https://github.com/Aldoubt/Aldoubt-agt_map_reconstruction) — Navigation-oriented 3D Map Reconstruction
@@ -94,8 +92,6 @@ LIO PCD
 - Uses the real robot polygon footprint instead of only circular clearance approximations.
 - Extends validation from strict aisle centerlines to constant-offset and smooth lateral-route search.
 
-**Evidence to add next:** raw PCD vs traversability vs recovered corridor vs route overlay comparison.
-
 ---
 
 ### 3. [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools) — Reproducible LiDAR–IMU Evaluation
@@ -106,8 +102,6 @@ LIO PCD
 - Records bag, IMU, timestamp handling, parameters, workspace versions and required upstream patches.
 - Standardizes run-directory contracts and trajectory evaluation to make algorithm comparisons auditable and reproducible.
 - Focuses on failure analysis in repetitive agricultural geometry instead of only successful demos.
-
-**Evidence to add next:** trajectory comparison, APE/RPE summary and representative failure cases.
 
 ---
 
