@@ -1,7 +1,11 @@
-<h1 align="center">Xuan Yang · Aldoubt</h1>
+<h1 align="center">杨轩 · Aldoubt</h1>
 
 <p align="center">
-  <strong>Robotics Autonomy · Navigation · LiDAR–IMU Localization · 3D Mapping · ROS 2</strong>
+  <strong>机器人自主系统 · 自主导航 · LiDAR–IMU 定位 · 3D 地图 · ROS 2</strong>
+</p>
+
+<p align="center">
+  <strong>简体中文 | <a href="./README_EN.md">English</a></strong>
 </p>
 
 <p align="center">
@@ -11,187 +15,199 @@
   <img src="https://img.shields.io/badge/Focus-Robotics%20Autonomy-2ea44f?style=flat-square" alt="Robotics Autonomy" />
 </p>
 
-I am an **Agricultural Machinery and Automation** student at **South China Agricultural University**, building autonomous robot systems for complex structured and semi-structured environments.
+我是 **华南农业大学农业机械化及其自动化专业** 学生，目前聚焦 **机器人自主导航、LiDAR–IMU 定位、3D 点云环境理解与 ROS 2 真机系统**。
 
-我目前聚焦 **机器人自主导航、LiDAR–IMU 定位、3D 点云环境理解与 ROS 2 真机系统**。农业场景是主要验证环境，但目标不是只解决单一农业任务，而是形成可迁移到移动机器人、巡检、割草、无人系统等平台的 **Robotics Autonomy** 能力。
+农业场景是我主要的验证环境，但目标并不是只解决单一农业任务，而是形成能够迁移到移动机器人、巡检机器人、割草机器人、无人系统等平台的 **Robotics Autonomy / 机器人自主系统能力**。
 
-> **What I work on:** make a real robot know **where it is**, understand **where it can go**, plan **how to get there**, and execute the task **reliably**.
+> **我关注的问题：让真实机器人知道自己在哪里、理解哪里能走、规划怎么走，并可靠地完成任务。**
 
 ---
 
-## System View
+## 系统视角
 
 ```text
 LiDAR / IMU / Camera / RTK / Wheel
                 |
                 v
-     Calibration & Synchronization
+          标定与时间同步
                 |
                 v
-       State Estimation / LIO
+         状态估计 / LIO
                 |
        +--------+--------+
        |                 |
        v                 v
- Localization       Registered Cloud
- Relocalization          |
-                         v
-                Ground / Traversability
-                         |
-                         v
-                 Navigation Map
-                         |
-                +--------+--------+
-                |                 |
-                v                 v
-             Planner          Controller
-                \               /
-                 \             /
-                  v           v
-                Mission / BehaviorTree
-                         |
-                      Safety
-                         |
-                      Chassis
+   定位 / 重定位        注册点云
+                           |
+                           v
+                    地面 / 可通行性
+                           |
+                           v
+                      导航地图
+                           |
+                  +--------+--------+
+                  |                 |
+                  v                 v
+               Planner          Controller
+                  \               /
+                   \             /
+                    v           v
+                  Mission / BehaviorTree
+                           |
+                         Safety
+                           |
+                         Chassis
 ```
 
-My current engineering focus is the complete chain from **state estimation and map assets** to **planning, control, mission execution and real-robot validation**.
+目前工程重点是打通从 **状态估计与地图资产** 到 **规划、控制、任务执行和真机验证** 的完整自主导航链路。
 
 ---
 
-## Featured Engineering Evidence
+## 核心项目与工程证据
 
-### 1. [AGT Navigation Runtime](https://github.com/Aldoubt/agt_navigation_runtime) — ROS 2 Autonomous Navigation Runtime
+### 1. [AGT Navigation Runtime](https://github.com/Aldoubt/agt_navigation_runtime) — ROS 2 自主导航运行时
 
-**Role:** main real-robot execution stack.
+**定位：** 当前主要的真机运行与执行系统。
 
-- Separates robot runtime from offline map / route asset production.
-- Integrates sensor adapters, FAST-LIVO2 odometry, ICP/NDT relocalization, local perception, Nav2 planning/control, safety arbitration, chassis adapters, BehaviorTree and mission management.
-- Current extracted ROS 2 Humble workspace has completed an **independent 23-package build**.
-- Architecture target: `Site Package + Vehicle Profile + Task -> Localization -> Perception -> Planner/Controller -> Mission -> Safety -> Chassis`.
+- 将机器人在线运行时与离线地图、语义和路线资产生产解耦。
+- 集成传感器适配、FAST-LIVO2 里程计、ICP/NDT 重定位、局部感知、Nav2 规划与控制、安全仲裁、底盘适配、BehaviorTree 与任务管理。
+- 当前抽取后的 ROS 2 Humble workspace 已完成 **23 个 package 独立构建验证**。
+- 运行链路目标：`Site Package + Vehicle Profile + Task -> Localization -> Perception -> Planner/Controller -> Mission -> Safety -> Chassis`。
 
 ---
 
-### 2. [AGT Map Reconstruction](https://github.com/Aldoubt/Aldoubt-agt_map_reconstruction) — Navigation-oriented 3D Map Reconstruction
+### 2. [AGT Map Reconstruction](https://github.com/Aldoubt/Aldoubt-agt_map_reconstruction) — 面向导航的 3D 地图恢复
 
-**Problem:** agricultural LiDAR maps contain vegetation clutter, repetitive row geometry and navigation-irrelevant points.
+**问题：** 农业 LiDAR 地图中存在大量植被杂波、重复垄行结构和与导航无关的三维点。
 
 ```text
 LIO PCD
-  -> preprocessing
-  -> ground segmentation
-  -> elevation / traversability
-  -> corridor recovery
-  -> semantic navigation map
-  -> polygon-footprint validation
-  -> in-aisle route feasibility search
+  -> 预处理
+  -> 地面分割
+  -> 高程 / 可通行性
+  -> 通道恢复
+  -> 语义导航地图
+  -> 机器人多边形足迹验证
+  -> 通道内路线可行性搜索
 ```
 
-- Compares height threshold, PMF, CSF and Patchwork-style ground segmentation strategies.
-- Exports Nav2-compatible trinary static maps with explicit safety semantics.
-- Uses the real robot polygon footprint instead of only circular clearance approximations.
-- Extends validation from strict aisle centerlines to constant-offset and smooth lateral-route search.
+- 对比 Height Threshold、PMF、CSF 与 Patchwork-style 等地面分割策略。
+- 输出符合 Nav2 使用习惯的三值静态地图，并显式区分静态障碍与不确定区域。
+- 使用真实机器人 Polygon Footprint 进行通道验证，而不是只使用等效圆形膨胀近似。
+- 从严格中心线验证进一步扩展到 constant-offset 和 smooth lateral route 搜索，用于判断通道内真实可行路线。
 
 ---
 
-### 3. [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools) — Reproducible LiDAR–IMU Evaluation
+### 3. [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools) — 可复现 LiDAR–IMU 评测
 
-**Role:** keep SLAM evaluation independent from navigation and robot-control code.
+**定位：** 将 SLAM / LIO 评测与导航、控制代码解耦，建立独立实验资产。
 
-- Unified experiment orchestration for **FAST-LIVO2, Point-LIO, GLIM and DLIO**.
-- Records bag, IMU, timestamp handling, parameters, workspace versions and required upstream patches.
-- Standardizes run-directory contracts and trajectory evaluation to make algorithm comparisons auditable and reproducible.
-- Focuses on failure analysis in repetitive agricultural geometry instead of only successful demos.
+- 为 **FAST-LIVO2、Point-LIO、GLIM、DLIO** 建立统一运行与实验编排方式。
+- 记录 rosbag、IMU、时间戳处理、参数、workspace 版本及必要上游补丁。
+- 统一 Run Directory Contract 和轨迹评价流程，使横向算法比较可审计、可复现。
+- 不只展示成功 Demo，更关注重复农业结构和退化场景中的漂移、失效与边界条件。
 
 ---
 
-### 4. [AGT Traversability Lab](https://github.com/Aldoubt/agt_traversability_lab) — Local LiDAR Perception & Traversability
+### 4. [AGT Traversability Lab](https://github.com/Aldoubt/agt_traversability_lab) — 局部 LiDAR 感知与可通行性
 
-**Research focus:** convert online MID360 observations into navigation-relevant local environment representations.
+**研究重点：** 将 MID360 在线观测转换为能够直接服务导航的局部环境表达。
 
 ```text
 rosbag2 / MID360
-  -> point-cloud baseline
-  -> ground segmentation
-  -> local map
-  -> traversability estimation
-  -> navigation interface
+  -> 点云显示基线
+  -> 地面分割
+  -> 局部地图
+  -> 可通行性估计
+  -> 导航接口
 ```
 
-Current work focuses on vegetation growth, corridor deformation, local ground structure and safe-feasibility estimation.
+当前重点关注植被生长、通道变形、局部地面结构与安全通行性的实时判断。
 
 ---
 
-## Repository Architecture
+## 仓库架构
 
-The navigation work is intentionally split by responsibility:
+导航相关代码按职责进行拆分：
 
 ```text
 agt_navigation_v2
-Offline mapping / semantic map / route asset production
+离线建图 / 语义地图 / 路线资产生产
                 |
-                | versioned deployment assets
+                | 版本化部署资产
                 v
 agt_navigation_runtime
-Online localization / perception / planning / control / mission / safety
+在线定位 / 感知 / 规划 / 控制 / 任务 / 安全
 ```
 
-Supporting research repositories validate individual capabilities before they are integrated into the runtime:
+支持研究仓库用于在进入运行时之前独立验证具体能力：
 
 ```text
-lio_benchmark_tools       -> state-estimation evaluation
-agt_map_reconstruction    -> offline navigation-map recovery
-agt_traversability_lab    -> online local perception experiments
+lio_benchmark_tools       -> 状态估计与 LIO 评测
+agt_map_reconstruction    -> 离线导航地图恢复
+agt_traversability_lab    -> 在线局部感知实验
 ```
 
 ---
 
-## Technical Stack
+## 技术栈
 
-### Engineering / regular use
+### 日常工程使用
 
 `ROS 2 Humble` · `Nav2` · `TF2` · `rosbag2` · `RViz2` · `Gazebo` · `C++17` · `Python` · `Eigen` · `PCL` · `OpenCV` · `CMake` · `Docker` · `Git`
 
-### Robotics algorithms / working knowledge
+### 机器人算法与工程认知
 
 `FAST-LIO2` · `FAST-LIVO2` · `ICP` · `NDT` · `OccupancyGrid` · `Ground Segmentation` · `Traversability` · `Behavior Trees` · `Global Planning` · `Path Tracking`
 
-### Currently deepening
+### 当前重点进深
 
 `SO(3) / SE(3)` · `Lie Groups` · `Jacobian Derivation` · `ESKF` · `IMU Modeling` · `Nonlinear Least Squares` · `Factor Graphs` · `Hybrid A*` · `MPC / MPPI`
 
 ---
 
-## Hardware & Deployment Experience
+## 硬件与部署经验
 
 `Livox MID360` · `IMU` · `RTK/GNSS` · `Industrial Camera` · `BUNKER` · `Ackermann Chassis`
 
-I prefer **reproducible offline validation before real-robot deployment**, while keeping datasets, parameters, software versions and failure cases traceable.
+工程上优先采用 **离线可复现验证 -> 真机部署** 的方式，并尽量保证数据、参数、软件版本与失败案例可追溯。
 
 ---
 
-## Current Learning Direction
+## 当前学习进深路线
 
-I am deliberately moving from **framework-level integration** toward **algorithm-level understanding**:
+我正在有意识地从 **框架级集成** 向 **算法级理解** 深入：
 
 ```text
 SO(3) / SE(3)
-      -> Jacobians
-      -> Probability / ESKF
-      -> IMU model & preintegration
-      -> Nonlinear optimization
-      -> LIO internals
-      -> Factor-graph optimization
-      -> Vehicle-aware planning & control
+      -> Jacobian
+      -> 概率模型 / ESKF
+      -> IMU 模型与预积分
+      -> 非线性优化
+      -> LIO 内部机制
+      -> 因子图优化
+      -> 车辆约束规划与控制
 ```
 
-The goal is to connect **mathematical models -> algorithm implementation -> robot behavior -> experimental evidence**.
+目标是把 **数学模型 -> 算法实现 -> 机器人行为 -> 实验佐证** 串成一条完整能力链。
 
 ---
 
-## Contact
+## 作品集与视觉佐证
 
-- Email: **xuanyang.robotics@gmail.com**
-- GitHub: **[@Aldoubt](https://github.com/Aldoubt)**
+后续会持续把结果图、GIF 和完整演示视频整理到 [`assets/`](./assets/) 并接入主页，优先展示：
 
-For technical questions about a repository, opening an Issue is preferred so the context, failure mode and solution remain reproducible.
+- 温室真机自主导航与任务执行
+- RViz 中的定位、规划、控制与状态变化
+- 原始点云到导航地图的恢复对比
+- LIO 多算法轨迹与 APE / RPE 评测
+- 局部地面分割与可通行性感知
+
+---
+
+## 联系方式
+
+- 邮箱：**xuanyang.robotics@gmail.com**
+- GitHub：**[@Aldoubt](https://github.com/Aldoubt)**
+
+如果是某个具体仓库的技术问题，建议优先通过对应仓库的 Issue 交流，便于保留问题背景、失效模式与解决过程。
