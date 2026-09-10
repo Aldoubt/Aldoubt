@@ -150,6 +150,51 @@ agt_traversability_lab    -> online local perception experiments
 
 ---
 
+## Engineering Roadmap
+
+I keep project ideas in three layers: **stabilizing, building, and exploring**. The profile README records direction and project relationships; detailed architecture belongs in repository `docs/`; implementation work belongs in Issues and PRs.
+
+```text
+Robotics Autonomy
+│
+├── Runtime
+│   └── AGT Navigation Runtime / v3
+│       localization / perception / Nav2 / mission / safety
+│
+├── Mapping & Perception
+│   ├── AGT Map Reconstruction
+│   └── AGT Traversability Lab
+│
+├── Evaluation
+│   └── LIO Benchmark Tools
+│
+└── Engineering Tooling
+    ├── proc-lens
+    │   Linux Process Inspector
+    │        -> ROS 2 Runtime Model
+    │        -> Dataflow Profiler
+    │
+    └── agt_robot_agent
+        Repo Audit
+             -> Runtime Audit
+             -> AI-assisted Diagnosis
+```
+
+### Building
+
+- **[proc-lens](https://github.com/Aldoubt/proc-lens)**: evolve the PID/resource inspector into a low-overhead ROS 2 Runtime Dataflow Profiler with thread awareness, ROS graph mapping, topic throughput, runtime budgets, rosbag experiments, and data-path anomaly visualization.
+- **[agt_robot_agent](https://github.com/Aldoubt/agt_robot_agent)**: robot-engineering Agent toolkit for static repository audits, runtime audits, x86/ARM portability checks, and AI diagnosis based on structured evidence exported by proc-lens.
+
+### Exploring
+
+- Reproducible automatic robot parameter tuning and performance regression experiments.
+- Dynamic/growing maps, map updates, and World Model / Neural Map directions.
+- A unified evidence chain connecting software architecture, runtime architecture, and experimental data for AI-assisted robot engineering.
+
+Design rule: **README tracks direction, Design Docs define architecture, Issues / PRs drive execution.**
+
+---
+
 ## Technical Stack
 
 ### Engineering / regular use
