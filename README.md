@@ -150,6 +150,51 @@ agt_traversability_lab    -> 在线局部感知实验
 
 ---
 
+## Engineering Roadmap
+
+我希望把项目想法分成 **正在稳定、正在构建、探索方向** 三层：主页只记录方向和项目关系，详细架构进入各仓库的 `docs/`，具体实现任务进入 Issues / PR，避免把 README 变成巨型 TODO。
+
+```text
+Robotics Autonomy
+│
+├── Runtime
+│   └── AGT Navigation Runtime / v3
+│       定位 / 感知 / Nav2 / 任务 / 安全
+│
+├── Mapping & Perception
+│   ├── AGT Map Reconstruction
+│   └── AGT Traversability Lab
+│
+├── Evaluation
+│   └── LIO Benchmark Tools
+│
+└── Engineering Tooling
+    ├── proc-lens
+    │   Linux Process Inspector
+    │        -> ROS 2 Runtime Model
+    │        -> Dataflow Profiler
+    │
+    └── agt_robot_agent
+        Repo Audit
+             -> Runtime Audit
+             -> AI-assisted Diagnosis
+```
+
+### 正在构建
+
+- **[proc-lens](https://github.com/Aldoubt/proc-lens)**：从 PID/资源占用透视继续升级为低开销 ROS 2 Runtime Dataflow Profiler，逐步增加线程、ROS Graph、topic 吞吐、运行预算、rosbag 实验与数据链异常可视化。
+- **[agt_robot_agent](https://github.com/Aldoubt/agt_robot_agent)**：作为机器人研发 Agent 工具库，负责仓库静态审计、运行时审计、x86/ARM 可移植性检查，以及消费 proc-lens 的结构化证据辅助 AI 诊断。
+
+### 探索方向
+
+- 可复现的机器人参数自动调优与实验回归。
+- 动态/生长地图、地图更新与 World Model / Neural Map。
+- 将软件架构、运行架构和实验数据统一成可被 AI 调用的机器人研发证据链。
+
+设计原则：**README 管方向，Design Doc 管架构，Issue / PR 管执行。**
+
+---
+
 ## 技术栈
 
 ### 日常工程使用
