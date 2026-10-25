@@ -1,213 +1,90 @@
-<h1 align="center">Xuan Yang · Aldoubt</h1>
+# Xuan Yang · Aldoubt
 
-<p align="center">
-  <strong>Robotics Autonomy · Navigation · LiDAR–IMU Localization · 3D Mapping · ROS 2</strong>
-</p>
+**Robotics Localization & Navigation | ROS 2 | LiDAR–IMU SLAM | Mobile Robot Systems**
 
-<p align="center">
-  <strong><a href="./README.md">简体中文</a> | English</strong>
-</p>
+I study Agricultural Machinery and Automation at South China Agricultural University. My work focuses on mobile robot autonomy, especially 3D LiDAR–IMU odometry, global relocalization, navigation-map construction, and integrating these components into ROS 2 / Nav2 systems for real-platform evaluation.
 
-<p align="center">
-  <a href="mailto:xuanyang.robotics@gmail.com"><img src="https://img.shields.io/badge/Email-xuanyang.robotics%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>
-  <img src="https://img.shields.io/badge/ROS%202-Humble-22314E?style=flat-square&logo=ros&logoColor=white" alt="ROS 2 Humble" />
-  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?style=flat-square&logo=cplusplus&logoColor=white" alt="C++17" />
-  <img src="https://img.shields.io/badge/Focus-Robotics%20Autonomy-2ea44f?style=flat-square" alt="Robotics Autonomy" />
-</p>
+**The problem I work on:** How can a mobile robot localize reliably, understand traversable environments, and execute navigation tasks continuously?
 
-I am an **Agricultural Machinery and Automation** student at **South China Agricultural University**, focusing on **robot autonomous navigation, LiDAR–IMU localization, 3D point-cloud environment understanding, and ROS 2 real-robot systems**.
+- **Focus:** LiDAR–IMU SLAM, global relocalization, point-cloud mapping, Nav2, ROS 2 integration
+- **Platforms:** Livox MID360, Bunker tracked robot, FW-mini steering-wheel robot
+- **Stack:** Ubuntu 22.04, ROS 2 Humble, C++, Python, Linux
+- **Roles:** LiDAR SLAM, localization/navigation algorithms, robotics software engineering
 
-Agricultural scenes are my main validation environments, but my goal is broader: to build transferable **Robotics Autonomy** capabilities for mobile robots, inspection platforms, mowing robots, unmanned systems, and other autonomous machines.
-
-> **What I work on:** make a real robot know **where it is**, understand **where it can go**, plan **how to get there**, and execute tasks **reliably**.
+[Email](mailto:xuanyang.robotics@gmail.com) · [Repositories](https://github.com/Aldoubt?tab=repositories)
 
 ---
 
-## System View
+## Featured Projects
+
+This portfolio highlights a small set of projects that demonstrate different engineering skills. For each project, refer to its README for the exact status and evidence. **Implemented, offline-tested, simulation-tested, and field-validated are different levels of evidence.**
+
+### 1. [AGT Navigation V3](https://github.com/Aldoubt/agt_navigation_v3) — ROS 2 Localization & Navigation
+
+**Demonstrates:** System integration, localization interfaces, Nav2 integration, and field acceptance workflows.
+
+A ROS 2 navigation stack targeting MID360 and Bunker-class tracked robots. It organizes local odometry, global relocalization, a single global TF correction authority, and Nav2 navigation.
+
+The repository documents launch procedures, map-asset preparation, TF and sensor-timing checks, acceptance gates, and known limitations.
+
+### 2. [AGT Field Test Workbench](https://github.com/Aldoubt/agt_field_test_workbench) — Field-Test Workflow
+
+**Demonstrates:** Test workflow engineering, sensor/chassis integration, and experiment traceability.
+
+The project aims to organize map preparation, map and route checks, navigation trials, supervised motion, and rosbag-based diagnostics into a consistent workflow.
+
+### 3. [AGT Map Reconstruction](https://github.com/Aldoubt/agt_map_reconstruction) — Point Clouds to Navigation Maps
+
+**Demonstrates:** Point-cloud processing, terrain/traversability analysis, and geometric validation.
+
+An offline toolkit for turning LIO-generated PCD maps into inspectable navigation assets, including elevation analysis, agricultural corridor recovery, semantic obstacle representation, Nav2 map export, and polygon-footprint route validation.
+
+### 4. [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools) — Reproducible LiDAR/LIO Experiments
+
+**Demonstrates:** Algorithm evaluation, experiment orchestration, data analysis, and failure diagnosis.
+
+The framework organizes offline experiments and records configurations, versions, parameters, trajectory-health checks, and resource usage. It distinguishes a successful run from a valid accuracy evaluation and does not claim absolute accuracy without ground truth.
+
+### 5. [proc-lens](https://github.com/Aldoubt/proc-lens) — Linux / ROS 2 Process Diagnostics
+
+**Demonstrates:** Linux systems programming, Rust, observability, and software packaging.
+
+A lightweight process inspector based on Linux `/proc`, with resource monitoring and process-provenance clues for ROS 2 workspaces and development projects. The repository includes installation and release instructions.
+
+---
+
+## Engineering Workflow
 
 ```text
-LiDAR / IMU / Camera / RTK / Wheel
-                |
-                v
-     Calibration & Synchronization
-                |
-                v
-       State Estimation / LIO
-                |
-       +--------+--------+
-       |                 |
-       v                 v
- Localization       Registered Cloud
- Relocalization          |
-                         v
-                Ground / Traversability
-                         |
-                         v
-                 Navigation Map
-                         |
-                +--------+--------+
-                |                 |
-                v                 v
-             Planner          Controller
-                \               /
-                 \             /
-                  v           v
-                Mission / BehaviorTree
-                         |
-                      Safety
-                         |
-                      Chassis
+Sensor and chassis integration
+             ↓
+Time synchronization, TF and extrinsic checks
+             ↓
+LiDAR–IMU odometry and mapping
+             ↓
+Map cleanup, traversability and navigation assets
+             ↓
+Global relocalization + local tracking
+             ↓
+Nav2 planning, control and mission execution
+             ↓
+Rosbags, metrics, failure analysis and regression tests
 ```
 
-My current engineering focus is the complete chain from **state estimation and map assets** to **planning, control, mission execution, and real-robot validation**.
+I care not only about getting a demo to run, but also about module boundaries, reproducible experiments, separating evidence from assumptions, and documenting failure conditions.
 
----
+## Where to Start
 
-## Featured Engineering Evidence
+- **End-to-end navigation engineering:** [AGT Navigation V3](https://github.com/Aldoubt/agt_navigation_v3)
+- **Point-cloud and map processing:** [AGT Map Reconstruction](https://github.com/Aldoubt/agt_map_reconstruction)
+- **Algorithm evaluation:** [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools)
+- **Test workflow and system diagnostics:** [Field Test Workbench](https://github.com/Aldoubt/agt_field_test_workbench) and [proc-lens](https://github.com/Aldoubt/proc-lens)
 
-### 1. [AGT Navigation Runtime](https://github.com/Aldoubt/agt_navigation_runtime) — ROS 2 Autonomous Navigation Runtime
-
-**Role:** main real-robot execution stack.
-
-- Separates robot runtime from offline map and route-asset production.
-- Integrates sensor adapters, FAST-LIVO2 odometry, ICP/NDT relocalization, local perception, Nav2 planning/control, safety arbitration, chassis adapters, BehaviorTree, and mission management.
-- The extracted ROS 2 Humble workspace has completed an **independent 23-package build**.
-- Architecture target: `Site Package + Vehicle Profile + Task -> Localization -> Perception -> Planner/Controller -> Mission -> Safety -> Chassis`.
-
----
-
-### 2. [AGT Map Reconstruction](https://github.com/Aldoubt/Aldoubt-agt_map_reconstruction) — Navigation-oriented 3D Map Reconstruction
-
-**Problem:** agricultural LiDAR maps contain vegetation clutter, repetitive row geometry, and navigation-irrelevant points.
-
-```text
-LIO PCD
-  -> preprocessing
-  -> ground segmentation
-  -> elevation / traversability
-  -> corridor recovery
-  -> semantic navigation map
-  -> polygon-footprint validation
-  -> in-aisle route feasibility search
-```
-
-- Compares height threshold, PMF, CSF, and Patchwork-style ground-segmentation strategies.
-- Exports Nav2-compatible trinary static maps with explicit safety semantics.
-- Uses the real robot polygon footprint instead of only circular clearance approximations.
-- Extends validation from strict aisle centerlines to constant-offset and smooth lateral-route search.
-
----
-
-### 3. [LIO Benchmark Tools](https://github.com/Aldoubt/lio_benchmark_tools) — Reproducible LiDAR–IMU Evaluation
-
-**Role:** keep SLAM evaluation independent from navigation and robot-control code.
-
-- Unified experiment orchestration for **FAST-LIVO2, Point-LIO, GLIM, and DLIO**.
-- Records bag, IMU, timestamp handling, parameters, workspace versions, and required upstream patches.
-- Standardizes run-directory contracts and trajectory evaluation to make algorithm comparisons auditable and reproducible.
-- Focuses on failure analysis in repetitive agricultural geometry instead of only successful demos.
-
----
-
-### 4. [AGT Traversability Lab](https://github.com/Aldoubt/agt_traversability_lab) — Local LiDAR Perception & Traversability
-
-**Research focus:** convert online MID360 observations into navigation-relevant local environment representations.
-
-```text
-rosbag2 / MID360
-  -> point-cloud baseline
-  -> ground segmentation
-  -> local map
-  -> traversability estimation
-  -> navigation interface
-```
-
-Current work focuses on vegetation growth, corridor deformation, local ground structure, and safe-feasibility estimation.
-
----
-
-## Repository Architecture
-
-The navigation work is intentionally split by responsibility:
-
-```text
-agt_navigation_v2
-Offline mapping / semantic map / route asset production
-                |
-                | versioned deployment assets
-                v
-agt_navigation_runtime
-Online localization / perception / planning / control / mission / safety
-```
-
-Supporting research repositories validate individual capabilities before they are integrated into the runtime:
-
-```text
-lio_benchmark_tools       -> state-estimation evaluation
-agt_map_reconstruction    -> offline navigation-map recovery
-agt_traversability_lab    -> online local perception experiments
-```
-
----
-
-## Technical Stack
-
-### Engineering / regular use
-
-`ROS 2 Humble` · `Nav2` · `TF2` · `rosbag2` · `RViz2` · `Gazebo` · `C++17` · `Python` · `Eigen` · `PCL` · `OpenCV` · `CMake` · `Docker` · `Git`
-
-### Robotics algorithms / working knowledge
-
-`FAST-LIO2` · `FAST-LIVO2` · `ICP` · `NDT` · `OccupancyGrid` · `Ground Segmentation` · `Traversability` · `Behavior Trees` · `Global Planning` · `Path Tracking`
-
-### Currently deepening
-
-`SO(3) / SE(3)` · `Lie Groups` · `Jacobian Derivation` · `ESKF` · `IMU Modeling` · `Nonlinear Least Squares` · `Factor Graphs` · `Hybrid A*` · `MPC / MPPI`
-
----
-
-## Hardware & Deployment Experience
-
-`Livox MID360` · `IMU` · `RTK/GNSS` · `Industrial Camera` · `BUNKER` · `Ackermann Chassis`
-
-I prefer **reproducible offline validation before real-robot deployment**, while keeping datasets, parameters, software versions, and failure cases traceable.
-
----
-
-## Current Learning Direction
-
-I am deliberately moving from **framework-level integration** toward **algorithm-level understanding**:
-
-```text
-SO(3) / SE(3)
-      -> Jacobians
-      -> Probability / ESKF
-      -> IMU model & preintegration
-      -> Nonlinear optimization
-      -> LIO internals
-      -> Factor-graph optimization
-      -> Vehicle-aware planning & control
-```
-
-The goal is to connect **mathematical models -> algorithm implementation -> robot behavior -> experimental evidence**.
-
----
-
-## Portfolio Media
-
-Visual evidence will be added progressively under [`assets/`](./assets/):
-
-- real-robot autonomous navigation demo
-- RViz localization / planning / control views
-- map-reconstruction comparisons
-- LIO trajectory benchmarks
-- local traversability visualization
-
----
+Forks of upstream algorithms, drivers, and dependencies are used for integration, reproduction, or patch maintenance; they should not be interpreted as algorithms implemented from scratch. Repositories involving field operation document their validation scope and known limitations.
 
 ## Contact
 
-- Email: **xuanyang.robotics@gmail.com**
-- GitHub: **[@Aldoubt](https://github.com/Aldoubt)**
+Open to conversations about robot localization/navigation, LiDAR–IMU SLAM, ROS 2 integration, and real-world mobile robot testing.
 
-For technical questions about a repository, opening an Issue is preferred so the context, failure mode, and solution remain reproducible.
+- Email: xuanyang.robotics@gmail.com
+- GitHub: [@Aldoubt](https://github.com/Aldoubt)
